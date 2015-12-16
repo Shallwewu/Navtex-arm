@@ -14,19 +14,19 @@ extern void TIM3_IRQHandler(void);
 //volatile char TimeLeft;
 
 /************************************************/
-/*	功能；自检函数Boot显示函数
-入口参数：无
-出口参数：无
+/*	鹿娄脛脺拢禄脳脭录矛潞炉脢媒Boot脧脭脢戮潞炉脢媒
+脠毛驴脷虏脦脢媒拢潞脦脼
+鲁枚驴脷虏脦脢媒拢潞脦脼
 /************************************************/
 void Boot_Paintintial();
 void Boot_Paintintial()
 {
 	char i;
 	CLEAR1();	
-	if(LANGUAGE==0)	//英文界面
+	if(LANGUAGE==0)	//脫垄脦脛陆莽脙忙
 	{
 
-		/* 表头SELFDIAG AND TIMESET */
+		/* 卤铆脥路SELFDIAG AND TIMESET */
 		CTAB[2]='S';	CTAB[3]='E';	CTAB[4]='L';	CTAB[5]='F';
 		CTAB[6]='D';	CTAB[7]='I';	CTAB[8]='A';	CTAB[9]='G';
 		CTAB[11]='A';	CTAB[12]='N';	CTAB[13]='D';
@@ -34,7 +34,7 @@ void Boot_Paintintial()
 		CTAB[19]='S';	CTAB[20]='E';	CTAB[21]='T';		
 		CW_PR(0,1,22);
 		
-		/* 写入第一行数据DIGA RESULT */
+		/* 脨麓脠毛碌脷脪禄脨脨脢媒戮脻DIGA RESULT */
 		CTAB[0]='D';	CTAB[1]='I';	CTAB[2]='G';	CTAB[3]='A';	
 		CTAB[5]='R';	CTAB[6]='E';	CTAB[7]='S';	CTAB[8]='U';	CTAB[9]='L';
 		CTAB[10]='T';
@@ -44,7 +44,7 @@ void Boot_Paintintial()
 		
 
 		
-		/* 写入第十行数据 TIME SET*/
+		/* 脨麓脠毛碌脷脢庐脨脨脢媒戮脻 TIME SET*/
 		CTAB[0]='T';	CTAB[1]='I';	CTAB[2]='M';		
 		CTAB[3]='E';	CTAB[5]='S';	CTAB[6]='E';	CTAB[7]='T';
 		CTAB[8]=':';
@@ -55,7 +55,7 @@ void Boot_Paintintial()
 
 
 		
-		/* 写入第十一行数据 DIAGNOSIS LOG*/				
+		/* 脨麓脠毛碌脷脢庐脪禄脨脨脢媒戮脻 DIAGNOSIS LOG*/				
 		CTAB[0]='S';	CTAB[1]='E';	CTAB[2]='T';	CTAB[4]='D';
 		CTAB[5]='O';	CTAB[6]='N';	CTAB[7]='E';	CTAB[8]=',';
 		CTAB[9]='E';	CTAB[10]='N';	CTAB[11]='T';	CTAB[12]='E';
@@ -74,19 +74,19 @@ void Boot_Paintintial()
 								
 		CW_PR(5,22,28);
 
-		W_DIAMOND(3,3);		//完成选定框的显示
+		W_DIAMOND(3,3);		//脥锚鲁脡脩隆露篓驴貌碌脛脧脭脢戮
 		W_HDIAMOND(3,14);
 		W_HDIAMOND(3,18);
 	
 	}
  	
- 	else	//中文界面
+ 	else	//脰脨脦脛陆莽脙忙
  	{
  		W_XLINE(0,319,25);	
 		W_CLEARXLINE(0,319,22);
 		W_CLEARXLINE(0,319,230);
 		
- 		CCW_PR1(1,7,0xd7d4,1);		//第一行内容"自检和时间设置菜单"
+ 		CCW_PR1(1,7,0xd7d4,1);		//碌脷脪禄脨脨脛脷脠脻"脳脭录矛潞脥脢卤录盲脡猫脰脙虏脣碌楼"
  		CCW_PR1(3,7,0xbcec,1);
      	CCW_PR1(5,7,0xbacd,1);		
     	CCW_PR1(7,7,0xcab1,1);
@@ -100,7 +100,7 @@ void Boot_Paintintial()
  		CCW_PR1(37,7,0xb6Af,1);
  		
  		
- 	 	CCW_PR1(6,32,0xd7d4,1);		//第二行内容"自检结果"
+ 	 	CCW_PR1(6,32,0xd7d4,1);		//碌脷露镁脨脨脛脷脠脻"脳脭录矛陆谩鹿没"
  		CCW_PR1(8,32,0xbcec,1);
   		CCW_PR1(10,32,0xbde1,1);
  		CCW_PR1(12,32,0xb9fb,1);		
@@ -108,7 +108,7 @@ void Boot_Paintintial()
  		SelfDiagnosis_Partpaint();
  	 	
 		
-   		CCW_PR1(6,192,0xcab1,1);	//第十一行内容"时间设置:"
+   		CCW_PR1(6,192,0xcab1,1);	//碌脷脢庐脪禄脨脨脛脷脠脻"脢卤录盲脡猫脰脙:"
  		CCW_PR1(8,192,0xbce4,1);
  	 	CCW_PR1(10,192,0xc9e8,1);
  	 	CCW_PR1(12,192,0xd6c3,1);
@@ -120,7 +120,7 @@ void Boot_Paintintial()
  
  
  
-   		CCW_PR1(6,216,0xc9e8,1);	//第十二行内容"设置完毕，按下ent键"
+   		CCW_PR1(6,216,0xc9e8,1);	//碌脷脢庐露镁脨脨脛脷脠脻"脡猫脰脙脥锚卤脧拢卢掳麓脧脗ent录眉"
  		CCW_PR1(8,216,0xd6c3,1);
  	 	CCW_PR1(10,216,0xcdea,1);
  	 	CCW_PR1(12,216,0xb1cf,1);
@@ -133,7 +133,7 @@ void Boot_Paintintial()
 	   	CCW_PR1(22,216,0xbcfc,1);	
 		
 		CCW_PR1(24,216,0x1860,0);
-   		CCW_PR1(28,216,0xc3eb,1);	//秒自动跳转	
+   		CCW_PR1(28,216,0xc3eb,1);	//脙毛脳脭露炉脤酶脳陋	
 		CCW_PR1(30,216,0xd7d4,1);				
    		CCW_PR1(32,216,0xb6af,1);	
 		CCW_PR1(34,216,0xccf8,1);		
@@ -151,26 +151,26 @@ void Boot_Paintintial()
 	W_YLINE(319,0,239);	
 
 
-	DISASCII(LANGUAGE?18:16,LANGUAGE?25:14,iyear);			//显示国际时间的数值
+	DISASCII(LANGUAGE?18:16,LANGUAGE?25:14,iyear);			//脧脭脢戮鹿煤录脢脢卤录盲碌脛脢媒脰碌
 	DISASCII(LANGUAGE?21:19,LANGUAGE?25:14,imonth);
 	DISASCII(LANGUAGE?24:22,LANGUAGE?25:14,iday);
 	DISASCII(LANGUAGE?27:25,LANGUAGE?25:14,ihour);
 	DISASCII(LANGUAGE?30:28,LANGUAGE?25:14,iminute);
 	
-//	IntialIRQB();			//IRQB中断开启
+//	IntialIRQB();			//IRQB脰脨露脧驴陋脝么
 	flag_on=1;
-	Selfdiag(0);				//运行自检函数
-	Diagresult_Paint(Diaglogs);	//把自检结果显示在LCD
+	Selfdiag(0);				//脭脣脨脨脳脭录矛潞炉脢媒
+	Diagresult_Paint(Diaglogs);	//掳脩脳脭录矛陆谩鹿没脧脭脢戮脭脷LCD
 	
-	//IPR2&=~IPR2_IRQB_IPL1_MASK;	//关闭IRQB的中断
+	//IPR2&=~IPR2_IRQB_IPL1_MASK;	//鹿脴卤脮IRQB碌脛脰脨露脧
 	//IPR2&=~IPR2_IRQB_IPL0_MASK; 
  }
  
  
 /************************************************/
-/*	功能；上下按键处理函数，选择所需选项
-入口参数：无
-出口参数：无
+/*	鹿娄脛脺拢禄脡脧脧脗掳麓录眉麓娄脌铆潞炉脢媒拢卢脩隆脭帽脣霉脨猫脩隆脧卯
+脠毛驴脷虏脦脢媒拢潞脦脼
+鲁枚驴脷虏脦脢媒拢潞脦脼
 /************************************************/
 void Boot_Updn();
 void Boot_Updn()
@@ -180,12 +180,12 @@ void Boot_Updn()
 	{
 		if (G_Key==UP)
 		{
-			G_Key=0;		//按键清零
-			if(BUFFER[0]==1 || BUFFER[0]==2 )	//非最上则上移,0 1 2 3为对比度、蜂鸣、国际时间和本地时间
+			G_Key=0;		//掳麓录眉脟氓脕茫
+			if(BUFFER[0]==1 || BUFFER[0]==2 )	//路脟脳卯脡脧脭貌脡脧脪脝,0 1 2 3脦陋露脭卤脠露脠隆垄路盲脙霉隆垄鹿煤录脢脢卤录盲潞脥卤戮碌脴脢卤录盲
 			{
-				BUFFER[0]=BUFFER[0]-1;        //非最上则上移
+				BUFFER[0]=BUFFER[0]-1;        //路脟脳卯脡脧脭貌脡脧脪脝
 				
-				if(BUFFER[0]==0)				//显示选定的选定框
+				if(BUFFER[0]==0)				//脧脭脢戮脩隆露篓碌脛脩隆露篓驴貌
 				{
 					W_DIAMOND(3,LANGUAGE?36:3);	
 					W_HDIAMOND(3,LANGUAGE?196:14);	
@@ -201,29 +201,29 @@ void Boot_Updn()
 			
 
 			
-		 	/*  TOD设置－时间输入－加  */
+		 	/*  TOD脡猫脰脙拢颅脢卤录盲脢盲脠毛拢颅录脫  */
 
-			if (BUFFER[0]==3&&iyear<99)            //年加1 只表示后三位，初始值为08，范围08－99
+			if (BUFFER[0]==3&&iyear<99)            //脛锚录脫1 脰禄卤铆脢戮潞贸脠媒脦禄拢卢鲁玫脢录脰碌脦陋08拢卢路露脦搂08拢颅99
 			{
 				iyear=iyear+1;
 			}
 				
-			if (BUFFER[0]==4&&imonth<12)        	//月加1,初始值为1，范围1－12,同时需要修改对应的天数，以免在某些月份出现不该有的天数
+			if (BUFFER[0]==4&&imonth<12)        	//脭脗录脫1,鲁玫脢录脰碌脦陋1拢卢路露脦搂1拢颅12,脥卢脢卤脨猫脪陋脨脼赂脛露脭脫娄碌脛脤矛脢媒拢卢脪脭脙芒脭脷脛鲁脨漏脭脗路脻鲁枚脧脰虏禄赂脙脫脨碌脛脤矛脢媒
 			{
 				imonth=imonth+1;
 				if(imonth==4||imonth==6||imonth==9||imonth==11) 
 				{
-					if (iday>30 )					//小月天数30,此时天数若超过30天，恢复到30天
+					if (iday>30 )					//脨隆脭脗脤矛脢媒30,麓脣脢卤脤矛脢媒脠么鲁卢鹿媒30脤矛拢卢禄脰赂麓碌陆30脤矛
 					iday=30;
 				}
 				if(imonth==2)
 				{
-					if(iyear%4==0)                  //表示闰年，2月天数29,此时天数若超过29天，恢复到29天
+					if(iyear%4==0)                  //卤铆脢戮脠貌脛锚拢卢2脭脗脤矛脢媒29,麓脣脢卤脤矛脢媒脠么鲁卢鹿媒29脤矛拢卢禄脰赂麓碌陆29脤矛
 					{
 						if (iday>29 )
 						iday=29;
 					}
-					else							//非闰年，2月天数28,此时天数若超过28天，恢复到28天
+					else							//路脟脠貌脛锚拢卢2脭脗脤矛脢媒28,麓脣脢卤脤矛脢媒脠么鲁卢鹿媒28脤矛拢卢禄脰赂麓碌陆28脤矛
 					{
 						if (iday>28 )
 						iday=28; 
@@ -231,27 +231,27 @@ void Boot_Updn()
 				}
 			}
 			
-			if (BUFFER[0]==5)       				//日加1,初始值为1，范围1－31,1-30,1-29,1-28
+			if (BUFFER[0]==5)       				//脠脮录脫1,鲁玫脢录脰碌脦陋1拢卢路露脦搂1拢颅31,1-30,1-29,1-28
 			{
-				if(imonth==1||imonth==3||imonth==5||imonth==7||imonth==8||imonth==10||imonth==12)   //大月，每月天数31天
+				if(imonth==1||imonth==3||imonth==5||imonth==7||imonth==8||imonth==10||imonth==12)   //麓贸脭脗拢卢脙驴脭脗脤矛脢媒31脤矛
 				{
 					if (iday<31 )
 					iday=iday+1;
 				}
 				
-				if(imonth==4||imonth==6||imonth==9||imonth==11)     	//小月，每月天数30天
+				if(imonth==4||imonth==6||imonth==9||imonth==11)     	//脨隆脭脗拢卢脙驴脭脗脤矛脢媒30脤矛
 				{
 					if (iday<30 )
 					iday=iday+1;
 				}
 				if(imonth==2)
 				{
-					if(iyear%4==0)                  //表示闰年，2月天数29
+					if(iyear%4==0)                  //卤铆脢戮脠貌脛锚拢卢2脭脗脤矛脢媒29
 					{
 						if (iday<29 )
 						iday=iday+1;
 					}
-					else							//非闰年，2月天数28
+					else							//路脟脠貌脛锚拢卢2脭脗脤矛脢媒28
 					{
 						if (iday<28 )
 						iday=iday+1; 
@@ -260,13 +260,13 @@ void Boot_Updn()
 			}
 				
 			
-			if (BUFFER[0]==6&&ihour<23)       	//时加1,初始值为0，范围0－23
+			if (BUFFER[0]==6&&ihour<23)       	//脢卤录脫1,鲁玫脢录脰碌脦陋0拢卢路露脦搂0拢颅23
 			{
 				ihour=ihour+1;
 			}
 				
 			
-			if (BUFFER[0]==7&&iminute<59)       	//分加1,初始值为0，范围0－59
+			if (BUFFER[0]==7&&iminute<59)       	//路脰录脫1,鲁玫脢录脰碌脦陋0拢卢路露脦搂0拢颅59
 			{
 				
 				iminute=iminute+1;
@@ -279,12 +279,12 @@ void Boot_Updn()
 		
 		if (G_Key==DOWN)
 		{
-			G_Key=0;								//按键清零
+			G_Key=0;								//掳麓录眉脟氓脕茫
 			if(BUFFER[0]==0||BUFFER[0]==1)        
 			{
-				BUFFER[0]=BUFFER[0]+1;       	//非最下则下移
+				BUFFER[0]=BUFFER[0]+1;       	//路脟脳卯脧脗脭貌脧脗脪脝
 				
-				if(BUFFER[0]==1)				//显示选定的选定框
+				if(BUFFER[0]==1)				//脧脭脢戮脩隆露篓碌脛脩隆露篓驴貌
 				{
 					W_DIAMOND(3,LANGUAGE?196:14);	
 					W_HDIAMOND(3,LANGUAGE?36:3);	
@@ -299,31 +299,31 @@ void Boot_Updn()
 
 			
 	
-		 	/*  TOD设置－时间输入－减  */
+		 	/*  TOD脡猫脰脙拢颅脢卤录盲脢盲脠毛拢颅录玫  */
 	
-			if (BUFFER[0]==3&&iyear>14 )       	//年减1 只表示后三位，初始值为2008
+			if (BUFFER[0]==3&&iyear>14 )       	//脛锚录玫1 脰禄卤铆脢戮潞贸脠媒脦禄拢卢鲁玫脢录脰碌脦陋2008
 			{
 				iyear=iyear-1;
 			}
 				
 			
-			if (BUFFER[0]==4&&imonth>1)        //月减1,初始值为1，最小为1，同时需要修改对应的天数，以免在某些月份出现不该有的天数
+			if (BUFFER[0]==4&&imonth>1)        //脭脗录玫1,鲁玫脢录脰碌脦陋1拢卢脳卯脨隆脦陋1拢卢脥卢脢卤脨猫脪陋脨脼赂脛露脭脫娄碌脛脤矛脢媒拢卢脪脭脙芒脭脷脛鲁脨漏脭脗路脻鲁枚脧脰虏禄赂脙脫脨碌脛脤矛脢媒
 			{
 				imonth=imonth-1;
 				
 				if(imonth==4||imonth==6||imonth==9||imonth==11) 
 				{
-					if (iday>30 )					//小月天数30,此时天数若超过30天，恢复到30天
+					if (iday>30 )					//脨隆脭脗脤矛脢媒30,麓脣脢卤脤矛脢媒脠么鲁卢鹿媒30脤矛拢卢禄脰赂麓碌陆30脤矛
 					iday=30;
 				}
 				if(imonth==2)
 				{
-					if(iyear%4==0)                  //表示闰年，2月天数29,此时天数若超过29天，恢复到29天
+					if(iyear%4==0)                  //卤铆脢戮脠貌脛锚拢卢2脭脗脤矛脢媒29,麓脣脢卤脤矛脢媒脠么鲁卢鹿媒29脤矛拢卢禄脰赂麓碌陆29脤矛
 					{
 						if (iday>29 )
 						iday=29;
 					}
-					else							//非闰年，2月天数28,此时天数若超过28天，恢复到28天
+					else							//路脟脠貌脛锚拢卢2脭脗脤矛脢媒28,麓脣脢卤脤矛脢媒脠么鲁卢鹿媒28脤矛拢卢禄脰赂麓碌陆28脤矛
 					{
 						if (iday>28 )
 						iday=28; 
@@ -331,24 +331,24 @@ void Boot_Updn()
 				}
 			}
 			
-			if (BUFFER[0]==5&&iday >1)       	//日减1,初始值为1，最小为1
+			if (BUFFER[0]==5&&iday >1)       	//脠脮录玫1,鲁玫脢录脰碌脦陋1拢卢脳卯脨隆脦陋1
 			{
 				iday=iday-1;
 			}
 			
-			if (BUFFER[0]==6&&ihour>0)       	//时减1,初始值为0，最小为0
+			if (BUFFER[0]==6&&ihour>0)       	//脢卤录玫1,鲁玫脢录脰碌脦陋0拢卢脳卯脨隆脦陋0
 			{
 				ihour=ihour-1;
 			}
 				
-			if (BUFFER[0]==7&&iminute>0)      //分减1,初始值为0，最小为0
+			if (BUFFER[0]==7&&iminute>0)      //路脰录玫1,鲁玫脢录脰碌脦陋0拢卢脳卯脨隆脦陋0
 			{
 				iminute=iminute-1;
 			}
 			
 		}
 
-		DISASCII(LANGUAGE?18:16,LANGUAGE?25:14,iyear);			//显示国际时间的数值
+		DISASCII(LANGUAGE?18:16,LANGUAGE?25:14,iyear);			//脧脭脢戮鹿煤录脢脢卤录盲碌脛脢媒脰碌
 		DISASCII(LANGUAGE?21:19,LANGUAGE?25:14,imonth);
 		DISASCII(LANGUAGE?24:22,LANGUAGE?25:14,iday);
 		DISASCII(LANGUAGE?27:25,LANGUAGE?25:14,ihour);
@@ -358,9 +358,9 @@ void Boot_Updn()
 	
 }
 /************************************************/
-/*	功能；左右按键处理函数，液晶检测函数
-入口参数：无
-出口参数：无
+/*	鹿娄脛脺拢禄脳贸脫脪掳麓录眉麓娄脌铆潞炉脢媒拢卢脪潞戮搂录矛虏芒潞炉脢媒
+脠毛驴脷虏脦脢媒拢潞脦脼
+鲁枚驴脷虏脦脢媒拢潞脦脼
 /************************************************/
 void Boot_Leftright() ;
 void Boot_Leftright()                
@@ -383,11 +383,11 @@ void Boot_Leftright()
 	
 
 	
-		G_Key=0;				//按键清零
+		G_Key=0;				//掳麓录眉脟氓脕茫
 		
 
 
-	 	if (BUFFER[0]==3)		//国际时间底部横线的跳转
+	 	if (BUFFER[0]==3)		//鹿煤录脢脢卤录盲碌脳虏驴潞谩脧脽碌脛脤酶脳陋
 	 	{
 	 		W_XLINE(LANGUAGE?128:112,LANGUAGE?159:143,LANGUAGE?208:120);
 	 		W_CLEARXLINE(LANGUAGE?168:152,LANGUAGE?183:167,LANGUAGE?208:120);
@@ -428,34 +428,34 @@ void Boot_Leftright()
 }
  
 /***************************************************************/
-/*	功能；CLR按键处理函数，返回到上层界面维护菜单
-入口参数：无
-出口参数：无
+/*	鹿娄脛脺拢禄CLR掳麓录眉麓娄脌铆潞炉脢媒拢卢路碌禄脴碌陆脡脧虏茫陆莽脙忙脦卢禄陇虏脣碌楼
+脠毛驴脷虏脦脢媒拢潞脦脼
+鲁枚驴脷虏脦脢媒拢潞脦脼
 /***************************************************************/
 void Boot_Return();
 void Boot_Return()
 {
 
 
-	if (G_Key==CLR&&BUFFER[0]>=3&&BUFFER[0]<=7)                  		//在国际时间位置下按下clr返回
+	if (G_Key==CLR&&BUFFER[0]>=3&&BUFFER[0]<=7)                  		//脭脷鹿煤录脢脢卤录盲脦禄脰脙脧脗掳麓脧脗clr路碌禄脴
 	{
-		G_Key=0;					//按键清零
-		W_CLEARXLINE(LANGUAGE?128:112,LANGUAGE?255:239,LANGUAGE?208:120);	//清除下划线
+		G_Key=0;					//掳麓录眉脟氓脕茫
+		W_CLEARXLINE(LANGUAGE?128:112,LANGUAGE?255:239,LANGUAGE?208:120);	//脟氓鲁媒脧脗禄庐脧脽
 
 		W_DIAMOND(3,LANGUAGE?196:14);		
 		
 
 		
-		BUFFER[0]=1;       //BUFFER[0]=1表示跳回本地时间
+		BUFFER[0]=1;       //BUFFER[0]=1卤铆脢戮脤酶禄脴卤戮碌脴脢卤录盲
 	}
 
 
 }
  
 /***************************************************************/
-/*	功能；ENT按键处理函数，进行自检操作，或者查看自检日志
-入口参数：无
-出口参数：无
+/*	鹿娄脛脺拢禄ENT掳麓录眉麓娄脌铆潞炉脢媒拢卢陆酶脨脨脳脭录矛虏脵脳梅拢卢禄貌脮脽虏茅驴麓脳脭录矛脠脮脰戮
+脠毛驴脷虏脦脢媒拢潞脦脼
+鲁枚驴脷虏脦脢媒拢潞脦脼
 /***************************************************************/
 void Boot_Dealing();
 void Boot_Dealing()
@@ -465,27 +465,27 @@ void Boot_Dealing()
 	 {
 	 	G_Key=0;
 
-	 	if (BUFFER[0]==1&&TimeLeft>=0)					//进入国际时间设置
+	 	if (BUFFER[0]==1&&TimeLeft>=0)					//陆酶脠毛鹿煤录脢脢卤录盲脡猫脰脙
 	 	{
 	 		BUFFER[0]=3;
 	 		W_XLINE(LANGUAGE?128:112,LANGUAGE?159:143,LANGUAGE?208:120);
 	 		W_HDIAMOND(3,LANGUAGE?196:14);	 		 	
 	 	}
 	    
-	 	if (BUFFER[0]==2||TimeLeft<0)					//进入本地时间的时差设置
+	 	if (BUFFER[0]==2||TimeLeft<0)					//陆酶脠毛卤戮碌脴脢卤录盲碌脛脢卤虏卯脡猫脰脙
 	 	{
-	 	/*zzy modified@2010-10-9，当自动减完后关闭秒中断*/
-	// 		IPR6&=0xFFCF;			//关闭TOD的秒中断
-//			TODCS&=0xfff7;//	关闭秒中断
-      TIM3->CR1&=0xfffe;  // 关定时器
+	 	/*zzy modified@2010-10-9拢卢碌卤脳脭露炉录玫脥锚潞贸鹿脴卤脮脙毛脰脨露脧*/
+	// 		IPR6&=0xFFCF;			//鹿脴卤脮TOD碌脛脙毛脰脨露脧
+//			TODCS&=0xfff7;//	鹿脴卤脮脙毛脰脨露脧
+      TIM3->CR1&=0xfffe;  // 鹿脴露篓脢卤脝梅
 	//-----------modified ended------------		
 	 		BUFFER[0]=0;
-//	 		TODCS=TODCS&0xfffe;	//TODEN=0,关闭TOD模块
+//	 		TODCS=TODCS&0xfffe;	//TODEN=0,鹿脴卤脮TOD脛拢驴茅
 //			TODDAY=DatesToDays(iyear,imonth,iday);
-//			TODHR=ihour;		//把小时置入TODHR	
-//			TODMIN=iminute;		//把分钟置入TODMIN
-//			TODCSL=0x7a93;//7b17;		//输入TOD模块的时钟为31.25Khz，进行0x7b11+1的预分频产生1Hz脉冲
-//			TODCS|=0x0001;		//开启TOD模块
+//			TODHR=ihour;		//掳脩脨隆脢卤脰脙脠毛TODHR	
+//			TODMIN=iminute;		//掳脩路脰脰脫脰脙脠毛TODMIN
+//			TODCSL=0x7a93;//7b17;		//脢盲脠毛TOD脛拢驴茅碌脛脢卤脰脫脦陋31.25Khz拢卢陆酶脨脨0x7b11+1碌脛脭陇路脰脝碌虏煤脡煤1Hz脗枚鲁氓
+//			TODCS|=0x0001;		//驴陋脝么TOD脛拢驴茅
 //			TODCS&=0xfff7; 
 			RTC_TimeRegulate(iyear,imonth,iday,ihour,iminute);
 			timestruct.year=iyear;
@@ -494,33 +494,31 @@ void Boot_Dealing()
 			timestruct.hour=ihour;
 			timestruct.minute=iminute;   
 	 		FLAG=0;
-			STATE=1;			//STATE为判定进入何界面的入口参数，初始化进入信息正文界面
-			State1parameter=0;	//入口参数0
-			CLEAR1();		//清一区和二区的存储空间
-			SaveTime();
+			STATE=1;			//STATE脦陋脜脨露篓陆酶脠毛潞脦陆莽脙忙碌脛脠毛驴脷虏脦脢媒拢卢鲁玫脢录禄炉陆酶脠毛脨脜脧垄脮媒脦脛陆莽脙忙
+			State1parameter=0;	//脠毛驴脷虏脦脢媒0
+			CLEAR1();		//脟氓脪禄脟酶潞脥露镁脟酶碌脛麓忙麓垄驴脮录盲
+//			SaveTime();
 	 	}	      
 	 }
 }
 
 /***************************************************/
-/*	功能；自检菜单，进行接收机自检，液晶自检，并可
-          查看自检日志
+/*	鹿娄脛脺拢禄脳脭录矛虏脣碌楼拢卢陆酶脨脨陆脫脢脮禄煤脳脭录矛拢卢脪潞戮搂脳脭录矛拢卢虏垄驴脡
+          虏茅驴麓脳脭录矛脠脮脰戮
           
-入口参数：无
-出口参数：无
+脠毛驴脷虏脦脢媒拢潞脦脼
+鲁枚驴脷虏脦脢媒拢潞脦脼
 /***************************************************/ 
 void RunBoot();
 void RunBoot()
 {
-
-	ReadTime();	//加载时间
+//	ReadTime();	//录脫脭脴脢卤录盲
 	FLAG=1;
 	TimeLeft=30;
-//	IPR6|=0x0010;			//设置TOD的秒中断的中断级别为10
+//	IPR6|=0x0010;			//脡猫脰脙TOD碌脛脙毛脰脨露脧碌脛脰脨露脧录露卤冒脦陋10
 	Boot_Paintintial();
-	TIM3->CR1 |= 0x01;   //开定时器
-  rtcinit();
-	TIM3_IRQHandler();			//显示当前剩余跳转时间，完毕后开启秒中断
+	TIM3->CR1 |= 0x01;   //驴陋露篓脢卤脝梅
+	TIM3_IRQHandler();			//脧脭脢戮碌卤脟掳脢拢脫脿脤酶脳陋脢卤录盲拢卢脥锚卤脧潞贸驴陋脝么脙毛脰脨露脧
 	
 	while(FLAG)
 	{

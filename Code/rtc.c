@@ -3,6 +3,7 @@
 #include "stm32f2xx_pwr.h"
 #include <stdio.h>
 #include "code.h"
+#include "timedelay.h"
 
 #define RTC_CLOCK_SOURCE_LSE  
 
@@ -20,59 +21,52 @@ void rtcinit(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f2xx.c file
      */     
-	RTC_InitTypeDef RTC_InitStructure;
-  if (RTC_ReadBackupRegister(RTC_BKP_DR0) != 0x1234)
+  
+  /* Enable the PWR APB1 Clock Interface */
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+
+  /* Allow access to BKP Domain */
+  PWR_BackupAccessCmd(ENABLE);
+  
+  if (RTC_ReadBackupRegister(RTC_BKP_DR0) != 0x1222)
   {  
+//    RCC_BackupResetCmd(ENABLE);
     /* RTC configuration  */
+  /* Enable the PWR APB1 Clock Interface */
+//    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+
+  /* Allow access to BKP Domain */
+//    PWR_BackupAccessCmd(ENABLE);
     RTC_Config();
 
-    /* Configure the RTC data register and RTC prescaler */
-    RTC_InitStructure.RTC_AsynchPrediv = AsynchPrediv;
-    RTC_InitStructure.RTC_SynchPrediv = SynchPrediv;
-    RTC_InitStructure.RTC_HourFormat = RTC_HourFormat_24;
-    RTC_Init(&RTC_InitStructure);
-    /* Configure the time register */
-    RTC_TimeRegulate(iyear,imonth,iday,ihour,iminute); 
-  }
+  } 
   else
   {   
-    /* Enable the PWR clock */
-    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-
-    /* Allow access to RTC */
-    PWR_BackupAccessCmd(ENABLE);
-
     /* Wait for RTC APB registers synchronisation */
     RTC_WaitForSynchro();
 
-  }
+    /* Enable BKPSRAM Clock */
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_BKPSRAM, ENABLE);   
+    
+    timestruct=GetTime();     //@wu
+    
+    iyear = timestruct.year;
+    imonth = timestruct.month;
+    iday = timestruct.day;
+    ihour = timestruct.hour;
+    iminute = timestruct.minute;
+  } 
 }
 
 void RTC_Config(void)
 {
+  RTC_InitTypeDef RTC_InitStructure;
   /* Enable the PWR clock */
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+//  RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
 
   /* Allow access to RTC */
-  PWR_BackupAccessCmd(ENABLE);
-    
-#if defined (RTC_CLOCK_SOURCE_LSI)  /* LSI used as RTC source clock*/
-/* The RTC Clock may varies due to LSI frequency dispersion. */   
-  /* Enable the LSI OSC */ 
-  RCC_LSICmd(ENABLE);
+//  PWR_BackupAccessCmd(ENABLE);
 
-  /* Wait till LSI is ready */  
-  while(RCC_GetFlagStatus(RCC_FLAG_LSIRDY) == RESET)
-  {
-  }
-
-  /* Select the RTC Clock Source */
-  RCC_RTCCLKConfig(RCC_RTCCLKSource_LSI);
-  
-  SynchPrediv = 0xFF;
-  AsynchPrediv = 0x7F;
-
-#elif defined (RTC_CLOCK_SOURCE_LSE) /* LSE used as RTC source clock */
   /* Enable the LSE OSC */
   RCC_LSEConfig(RCC_LSE_ON);
 
@@ -86,23 +80,53 @@ void RTC_Config(void)
   
   SynchPrediv = 0xFF;
   AsynchPrediv = 0x7F;
-
-#else
-  #error Please select the RTC Clock source inside the rtc.c file
-#endif /* RTC_CLOCK_SOURCE_LSI */
   
   /* Enable the RTC Clock */
   RCC_RTCCLKCmd(ENABLE);
 
   /* Wait for RTC APB registers synchronisation */
   RTC_WaitForSynchro();
+  
+  /* Write to the first RTC Backup Data Register */
+  RTC_WriteBackupRegister(RTC_BKP_DR0, 0x1222);
+  
+    /* Configure the RTC data register and RTC prescaler */
+  RTC_InitStructure.RTC_AsynchPrediv = AsynchPrediv;
+  RTC_InitStructure.RTC_SynchPrediv = SynchPrediv;
+  RTC_InitStructure.RTC_HourFormat = RTC_HourFormat_24;
+  RTC_Init(&RTC_InitStructure);
+  /* Configure the time register */
+  RTC_TimeRegulate(15, 8, 8, 0, 0); 
+  
+  delay_us(10);
+  
+  timestruct=GetTime();     //@wu   
+  iyear = timestruct.year;
+  imonth = timestruct.month;
+  iday = timestruct.day;
+  ihour = timestruct.hour;
+  iminute = timestruct.minute;  
+  
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_BKPSRAM, ENABLE);
+  
+  /* Enable the Backup SRAM low power Regulator to retain it's content in VBAT mode */
+  PWR_BackupRegulatorCmd(ENABLE);
+
+  /* Wait until the Backup SRAM low power Regulator is ready */
+  while(PWR_GetFlagStatus(PWR_FLAG_BRR) == RESET)
+  {
+  }
+
+/* RTC Backup Data Registers **************************************************/
+  /* Write to RTC Backup Data Registers */
+  RTC_WriteBackupRegister(RTC_BKP_DR0, 0x1222);   
 }
 
 /********Time set************/
 void RTC_TimeRegulate(u8 year,u8 month,u8 day,u8 hour,u8 minute)
 {
-  	RTC_TimeTypeDef RTC_TimeStructure;
-  	RTC_DateTypeDef RTC_DateStructure;
+    RTC_TimeTypeDef RTC_TimeStructure;
+    RTC_DateTypeDef RTC_DateStructure;
     RTC_TimeStructure.RTC_H12     = RTC_H12_PM;
     RTC_TimeStructure.RTC_Hours = hour;
     RTC_TimeStructure.RTC_Minutes = minute;
@@ -114,36 +138,39 @@ void RTC_TimeRegulate(u8 year,u8 month,u8 day,u8 hour,u8 minute)
     RTC_DateStructure.RTC_Date = day;
     RTC_DateStructure.RTC_Month = month;
     RTC_DateStructure.RTC_Year = year;
-  	RTC_SetDate(RTC_Format_BIN, &RTC_DateStructure);
-  if((RTC_SetTime(RTC_Format_BIN, &RTC_TimeStructure)!= ERROR)&&(RTC_SetDate(RTC_Format_BIN, &RTC_DateStructure)!= ERROR))
-  {
-    RTC_WriteBackupRegister(RTC_BKP_DR0, 0x32F2);		
-  } 
+    RTC_SetDate(RTC_Format_BIN, &RTC_DateStructure);
+    RTC_SetTime(RTC_Format_BIN, &RTC_TimeStructure);
+  
+    iyear = year;
+    imonth = month;
+    iday = day;
+    ihour = hour;
+    iminute = minute;
 }
 
 timetype GetTime(void)
 {
-//	 RTC_DateTypeDef* RTC_DateStruct;
-	 RTC_TimeTypeDef* RTC_TimeStruct;
-	 timetype timeofnow;
-	 u32 readdate,readtime;
-//	 RTC_GetDate(RTC_Format_BIN,RTC_DateStruct);
+//   RTC_DateTypeDef* RTC_DateStruct;
+   RTC_TimeTypeDef* RTC_TimeStruct;
+   timetype timeofnow;
+   u32 readdate,readtime;
+//   RTC_GetDate(RTC_Format_BIN,RTC_DateStruct);
 //   RTC_GetTime(RTC_Format_BIN,RTC_TimeStruct);
-	 readtime=RTC->TR;
-	 timeofnow.hour=((readtime&0x00300000)>>20)*10+((readtime&0x000f0000)>>16);
-	 timeofnow.minute=((readtime&0x00007000)>>12)*10+((readtime&0x00000f00)>>8);
-	 timeofnow.second=((readtime&0x00000070)>>4)*10+(readtime&0x0000000f);	
-	 readdate=RTC->DR;
-	 timeofnow.year=((readdate&0x00f00000)>>20)*10+((readdate&0x000f0000)>>16);
-	 timeofnow.month=((readdate&0x00001000)>>12)*10+((readdate&0x00000f00)>>8);
-	 timeofnow.day=((readdate&0x00000030)>>4)*10+(readdate&0x0000000f);	
-//	 timestruct.year=RTC_DateStruct->RTC_Year;
-//	 timestruct.month=RTC_DateStruct->RTC_Month;
-//	 timestruct.day=RTC_DateStruct->RTC_Date;
-//	 timeofnow.hour=RTC_TimeStruct->RTC_Hours;
+   readtime=RTC->TR;
+   timeofnow.hour=((readtime&0x00300000)>>20)*10+((readtime&0x000f0000)>>16);
+   timeofnow.minute=((readtime&0x00007000)>>12)*10+((readtime&0x00000f00)>>8);
+   timeofnow.second=((readtime&0x00000070)>>4)*10+(readtime&0x0000000f);  
+   readdate=RTC->DR;
+   timeofnow.year=((readdate&0x00f00000)>>20)*10+((readdate&0x000f0000)>>16);
+   timeofnow.month=((readdate&0x00001000)>>12)*10+((readdate&0x00000f00)>>8);
+   timeofnow.day=((readdate&0x00000030)>>4)*10+(readdate&0x0000000f); 
+//   timestruct.year=RTC_DateStruct->RTC_Year;
+//   timestruct.month=RTC_DateStruct->RTC_Month;
+//   timestruct.day=RTC_DateStruct->RTC_Date;
+//   timeofnow.hour=RTC_TimeStruct->RTC_Hours;
 //   timeofnow.minute=RTC_TimeStruct->RTC_Minutes;
 //   timeofnow.second=RTC_TimeStruct->RTC_Seconds;
-	 return timeofnow;
+   return timeofnow;
 }
-	
-	
+  
+  

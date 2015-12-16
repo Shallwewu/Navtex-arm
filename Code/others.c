@@ -688,6 +688,7 @@ void IntialNormal()
   ADC1_Init();
 //	if(Operated==0)				//出厂设置时需要进行中英文菜单选择
 	RunLanguageChoose();	//完成中英文菜单选择
+  rtcinit();
 	RunBoot();					//BOOT自检运行
 	
 //@wu	IntialTIMER();				//定时器0初始化
@@ -737,6 +738,8 @@ void IntialOriginal()
 //	asm (bfclr #$0300,sr);	//开启总中断,所有中断级别有效
 	
 	RunLanguageChoose();	//完成中英文菜单选择	
+	
+	RTC_TimeRegulate(15, 8, 8, 0, 0);
 	RunBoot();
 
 //	IntialTIMER();			//定时器0的初始化，用于信息处理

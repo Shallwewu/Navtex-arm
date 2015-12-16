@@ -1116,7 +1116,8 @@ void SaveTime()
 // 	hr=TODHR;
 // 	min=TODMIN;
 //	TODCS&=~TODCS_TOD_LOCK_MASK;//关闭TOD_Lock锁定位 
-	timestruct=GetTime();     //@wu
+
+/*	timestruct=GetTime();     //@wu
 
 	if(timestruct.day!=0||timestruct.hour!=0||timestruct.minute!=0)
 	{
@@ -1126,7 +1127,7 @@ void SaveTime()
 	 	Write_Int_Eprm(HOUR,timestruct.hour);
 	 	Write_Int_Eprm(MINUTE,timestruct.minute);	
 	}
-
+*/
 	
 
 }
@@ -1139,7 +1140,7 @@ void SaveTime()
 void ReadTime();
 void ReadTime()
 {
-  sword i;
+/*  sword i;
 // 	u16 day;
 	iyear=Read_Int_Eprm(YEAR);
 	imonth=Read_Int_Eprm(MONTH);
@@ -1173,7 +1174,7 @@ void ReadTime()
  			iminute=Messagesavetop[Messagetoprank[i]].time[1];					 			 			 			 			 			
  		}		
  	}
-
+*/
 }
 
 //*********************************************************************/
@@ -1299,7 +1300,7 @@ void Intial_Normal_Receiver()
 	flag_auto_iec=iec_mode_read(IEC_MODE);
 	TransBacklight();
 	TransContrast();
-	ReadTime();
+//	ReadTime();
 }
 
 /**********eeprom中数据读取，测试用************@吴贤为*/
