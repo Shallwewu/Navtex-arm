@@ -488,6 +488,7 @@ void Boot_Dealing()
 //			TODCS|=0x0001;		//¿ªÆôTODÄ£¿é
 //			TODCS&=0xfff7; 
 			RTC_TimeRegulate(iyear,imonth,iday,ihour,iminute);
+			//rtc save time
 			timestruct.year=iyear;
 			timestruct.month=imonth;
 			timestruct.day=iday;
