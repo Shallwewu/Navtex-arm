@@ -586,7 +586,7 @@ void MsgUnlock(int numtoprank)
 /*	
 	if(((days+3)<TODDAL)||(((days+3)==TODDAL)&&hours<TODHAL)||
 	(((days+3)==TODDAL)&&(hours==TODHAL)&&(minutes<TODMAL)))*/
-//	timestruct=GetTime();   @wu
+	timestruct=GetTime();   //@wu
 	daysnow=DatesToDays(timestruct.year,timestruct.month,timestruct.day);
 	if(((days+3)<daysnow)||(((days+3)==daysnow)&&hours<timestruct.hour)||
 	(((days+3)==daysnow)&&(hours==timestruct.hour)&&(minutes<=timestruct.minute)))
@@ -836,7 +836,7 @@ void Savetemptop()
 		Messagetemptop.area=auto_area;
 //	TODCS|=TODCS_TOD_LOCK_MASK;		//开启TOD_Lock位，读取TOD模块中时间的寄存器 
 //	DaysToDates(TODDAY,&Messagetemptop.date[2],&Messagetemptop.date[1],&Messagetemptop.date[0]);
-//	timestruct=GetTime();
+	timestruct=GetTime();
   Messagetemptop.date[2]=timestruct.day;
   Messagetemptop.date[1]=timestruct.month;
 	Messagetemptop.date[0]=timestruct.year;
